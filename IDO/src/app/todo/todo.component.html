@@ -1,0 +1,256 @@
+<header>
+  <!-- Logo and App Name -->
+  <div class="logo">
+    <img src="assets/photos/todo-list.png" alt="Logo" />
+  </div>
+  <h1 class="app-name">IDO</h1>
+
+  <!-- User Information -->
+  <div class="user-info">
+    <div class="user-details">
+      <div class="user-avatar">
+        <img src="assets/photos/avatar.png" alt="Avatar" />
+      </div>
+      <div class="user-name">{{loggedInUser}}</div>
+    </div>
+  </div>
+
+
+
+  <!-- Logout button -->
+  <button class="logout" (click)="logout()">Logout</button>
+</header>
+
+<div class="body">
+  
+  <!-- Quote Banner -->
+  <div class="quote-banner" *ngIf="showQuoteBanner">
+    <div class="quote-text">
+      "Anything can go wrong will go wrong!"
+    </div>
+    <div class="quote-actions">
+      <button class="close-quote" (click)="closeQuoteBanner()">Close</button>
+    </div>
+  </div>
+
+  <!-- Show Banner Button -->
+  <button class="show-banner-btn" *ngIf="!showQuoteBanner" (click)="showQuoteBanner = true">Show Banner</button>
+
+  <!-- Add new task form -->
+  <form (submit)="addTask()" style="margin-bottom: 15px;">
+    <input type="text" class="texttask" [(ngModel)]="newTask" name="newTask" [ngModelOptions]="{ standalone: true }" placeholder="Task title" />
+    <button type="submit">Add Task</button>
+  </form>
+
+  <!-- Task Search -->
+<input type="text" class="search-input" [(ngModel)]="searchTerm" name="searchTerm" placeholder="Search by task title" />
+
+
+<div class="columns">
+  <!-- First Column: To Do -->
+  <div class="column" (drop)="onDrop($event, 'To Do')" (dragover)="onDragOver($event)">
+    <h2 class="column-title">To Do</h2>
+    <ul>
+      <li *ngFor="let task of filteredTasksByStatus('To Do')" [attr.draggable]="true" (dragstart)="onDragStart($event, task)">
+        <div class="task-card">
+          <br>
+          <div class="task-content">
+            <div contenteditable="true" class="task-title" (input)="updateTask(task, 'title', $event)" (keydown.enter)="$event.preventDefault()" [textContent]="task.title"></div>
+            <br>
+            <div class="task-details">
+              <div>
+                <span class="label">Category:</span>
+                <span contenteditable="true" class="task-category" (input)="updateTask(task, 'category',  $event)" (keydown.enter)="$event.preventDefault()" [textContent]="task.category"></span>
+              </div>
+              <br>
+              <div>
+              <span class="label">Duedate:</span>
+              <input type="text" class="form-control"  
+              bsDatepicker
+              [bsConfig]="{ isAnimated: true, dateInputFormat: 'YYYY-MM-DD' }"
+               [(ngModel)]="task.dueDate" name="dueDate" placeholder="Select a due date" 
+               (ngModelChange)="updateTask(task, 'dueDate', $event, task.dueDate)"/>
+              </div>
+              <br>
+              <div class="task-estimate">
+                <span class="label">Estimate:</span>
+                <span contenteditable="true" (input)="updateTask(task, 'estimateValue',  $event)" (keydown.enter)="$event.preventDefault()" [textContent]="task.estimate?.value" style="margin-right: 0.5rem;"></span>
+                <span contenteditable="true" (input)="updateTask(task, 'estimateUnits',  $event)" (keydown.enter)="$event.preventDefault()" [textContent]="task.estimate?.units"></span>
+              </div>
+              <br>
+              <div class="task-importance">
+                Importance:
+                <select [(ngModel)]="task.importance" name="importance" (change)="updateTask(task, 'importance',  $event)">
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="task-actions">
+            <button (click)="deleteTask(task.id)">Delete</button>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Second Column: Doing -->
+  <div class="column" (drop)="onDrop($event, 'Doing')" (dragover)="onDragOver($event)">
+    <h2 class="column-title">Doing</h2>
+    <ul>
+      <li *ngFor="let task of filteredTasksByStatus('Doing')" [attr.draggable]="true" (dragstart)="onDragStart($event, task)">
+        <div class="task-card">
+          <br>
+          <div class="task-content">
+            <div contenteditable="true" class="task-title" (input)="updateTask(task, 'title', $event)" (keydown.enter)="$event.preventDefault()" [textContent]="task.title"></div>
+            <br>
+            <div class="task-details">
+              <div>
+                <span class="label">Category:</span>
+                <span contenteditable="true" class="task-category" (input)="updateTask(task, 'category',  $event)" (keydown.enter)="$event.preventDefault()" [textContent]="task.category"></span>
+              </div>
+              <br>
+              <div>
+              <span class="label">Duedate:</span>
+              <input type="text" class="form-control"  
+              bsDatepicker
+              [bsConfig]="{ isAnimated: true, dateInputFormat: 'YYYY-MM-DD' }"
+               [(ngModel)]="task.dueDate" name="dueDate" placeholder="Select a due date" 
+               (ngModelChange)="updateTask(task, 'dueDate', $event, task.dueDate)"/>
+              </div>
+              <br>
+              <div class="task-estimate">
+                <span class="label">Estimate:</span>
+                <span contenteditable="true" (input)="updateTask(task, 'estimateValue',  $event)" (keydown.enter)="$event.preventDefault()" [textContent]="task.estimate?.value" style="margin-right: 0.5rem;"></span>
+                <span contenteditable="true" (input)="updateTask(task, 'estimateUnits',  $event)" (keydown.enter)="$event.preventDefault()" [textContent]="task.estimate?.units"></span>
+              </div>
+              <br>
+              <div class="task-importance">
+                Importance:
+                <select [(ngModel)]="task.importance" name="importance" (change)="updateTask(task, 'importance',  $event)">
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="task-actions">
+            <button (click)="deleteTask(task.id)">Delete</button>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Third Column: Done -->
+  <div class="column" (drop)="onDrop($event, 'Done')" (dragover)="onDragOver($event)">
+    <h2 class="column-title">Done</h2>
+    <ul>
+      <li *ngFor="let task of filteredTasksByStatus('Done')" [attr.draggable]="true" (dragstart)="onDragStart($event, task)">
+        <div class="task-card">
+          <br>
+          <div class="task-content">
+            <div contenteditable="true" class="task-title" (input)="updateTask(task, 'title', $event)" (keydown.enter)="$event.preventDefault()" [textContent]="task.title"></div>
+            <br>
+            <div class="task-details">
+              <div>
+                <span class="label">Category:</span>
+                <span contenteditable="true" class="task-category" (input)="updateTask(task, 'category',  $event)" (keydown.enter)="$event.preventDefault()" [textContent]="task.category"></span>
+              </div>
+              <br>
+              <div>
+              <span class="label">Duedate:</span>
+              <input type="text" class="form-control"  
+              bsDatepicker
+              [bsConfig]="{ isAnimated: true, dateInputFormat: 'YYYY-MM-DD' }"
+               [(ngModel)]="task.dueDate" name="dueDate" placeholder="Select a due date" 
+               (ngModelChange)="updateTask(task, 'dueDate', $event, task.dueDate)"/>
+              </div>
+              <br>
+              <div class="task-estimate">
+                <span class="label">Estimate:</span>
+                <span contenteditable="true" (input)="updateTask(task, 'estimateValue',  $event)" (keydown.enter)="$event.preventDefault()" [textContent]="task.estimate?.value" style="margin-right: 0.5rem;"></span>
+                <span contenteditable="true" (input)="updateTask(task, 'estimateUnits',  $event)" (keydown.enter)="$event.preventDefault()" [textContent]="task.estimate?.units"></span>
+              </div>
+              <br>
+              <div class="task-importance">
+                Importance:
+                <select [(ngModel)]="task.importance" name="importance" (change)="updateTask(task, 'importance',  $event)">
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="task-actions">
+            <button (click)="deleteTask(task.id)">Delete</button>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+
+
+
+
+  <!-- List of tasks -->
+  <!-- <ul>
+    <li *ngFor="let task of filteredTasks">
+      <div class="task-card">
+        <div class="task-status">
+          <span [ngSwitch]="task.completed">
+            <span *ngSwitchCase="false" class="status-to-do">To Do</span>
+            <span *ngSwitchCase="true" class="status-doing">Doing</span>
+            <span *ngSwitchDefault class="status-done">Done</span>
+          </span>
+        </div>
+        <br>
+        <div class="task-content">
+          <div contenteditable="true" class="task-title" (input)="updateTask(task, 'title', $event)" (keydown.enter)="$event.preventDefault()" [textContent]="task.title"></div>
+          <br>
+          <div class="task-details">
+            <div>
+              <span class="label">Category:</span>
+              <span contenteditable="true" class="task-category" (input)="updateTask(task, 'category',  $event)" (keydown.enter)="$event.preventDefault()" [textContent]="task.category"></span>
+            </div>
+            <br>
+            <div>
+            <span class="label">Duedate:</span>
+            <input type="text" class="form-control"  
+            bsDatepicker
+            [bsConfig]="{ isAnimated: true, dateInputFormat: 'YYYY-MM-DD' }"
+             [(ngModel)]="task.dueDate" name="dueDate" placeholder="Select a due date" 
+             (ngModelChange)="updateTask(task, 'dueDate', $event, task.dueDate)"/>
+            </div>
+            <br>
+            <div class="task-estimate">
+              <span class="label">Estimate:</span>
+              <span contenteditable="true" (input)="updateTask(task, 'estimateValue',  $event)" (keydown.enter)="$event.preventDefault()" [textContent]="task.estimate?.value" style="margin-right: 0.5rem;"></span>
+              <span contenteditable="true" (input)="updateTask(task, 'estimateUnits',  $event)" (keydown.enter)="$event.preventDefault()" [textContent]="task.estimate?.units"></span>
+            </div>
+            <br>
+            <div class="task-importance">
+              Importance:
+              <select [(ngModel)]="task.importance" name="importance" (change)="updateTask(task, 'importance',  $event)">
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="task-actions">
+          <button (click)="deleteTask(task.id)">Delete</button>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div> -->
+

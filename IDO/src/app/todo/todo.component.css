@@ -1,0 +1,193 @@
+.task-card {
+    margin-bottom: 10px; /* Add margin-bottom to create space between cards */
+    padding: 10px; /* Optional: Add padding for visual spacing within the card */
+  }
+
+  img {
+    max-width: 100px; /* Adjust the value to the desired width */
+    max-height: 100px; /* Adjust the value to the desired height */
+    margin-bottom: 2px; /* Add margin as needed */
+  }
+
+  button {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .header-content {
+    display: flex;
+    align-items: center;
+  }
+
+  .app-info {
+    display: flex;
+    align-items: center;
+    margin-right: auto;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f0f0f0;
+    margin-bottom: 2rem;
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo img {
+    height: 40px;
+    margin-right: 10px;
+  }
+  
+  .app-name {
+    margin-right: auto;
+  }
+
+  .user-avatar{
+    text-align: center;
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+    margin-right: 3rem;
+  }
+  
+  .user-avatar img {
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+  
+  .user-name {
+    margin-right: 10px;
+  }
+  
+  .logout {
+    background-color: #cac5c5;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .logout:hover {
+    background-color: #cc0000;
+  }
+
+  .texttask{
+    margin-right: 1rem;
+  }
+  
+  .task-importance{
+    margin-bottom: 1rem;
+  }
+  
+  .label {
+    margin-right: 10px; /* Adjust the value as needed */
+  }
+  
+  .body{
+    direction: ltr;
+  }
+
+  .quote-banner {
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .quote-text {
+    font-size: 16px;
+  }
+  
+  .quote-actions {
+    margin-left: 10px;
+  }
+  
+  .close-quote {
+    background: none;
+    border: none;
+    color: #888;
+    cursor: pointer;
+  }
+
+  .show-banner-btn
+  {
+   margin-bottom: 20px;
+  }
+
+/* Add styles for the columns and tasks */
+.columns {
+  display: flex;
+}
+
+.column {
+  flex: 1;
+  margin: 0 10px;
+  /* border: 1px solid #ccc; */
+  border-radius: 5px;
+  padding: 10px;
+}
+
+/* Styles for column header (title) */
+.column-header {
+  text-align: center;
+  background-color: #f2f2f2;
+  padding: 5px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.column-title {
+  margin: 0;
+  color: #555;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Styles for individual tasks */
+.task-card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.task-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.task-details {
+  color: #555;
+}
+
+/* Rest of your existing CSS styles... */
+
+
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.search-input{
+  margin-bottom: 20px;
+}
+

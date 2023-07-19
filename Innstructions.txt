@@ -1,0 +1,49 @@
+IDO Application User Guide
+
+---> Introduction:
+The IDO application is a task management system that helps you organize your tasks efficiently. 
+This user guide provides instructions on how to run the IDO application.
+
+---> System Requirements:
+
+Node.js (version 12 or higher)
+Angular CLI (version 12 or higher)
+.NET Core SDK (version 3.1 or higher)
+SQL Server (version 2016 or higher)
+
+---> Installation Steps:
+ 
+   1) Clone the Repository:
+
+      1.1) Open a terminal or command prompt.
+      1.2) Run the following command to clone the backend repository: git clone https://github.com/Rashad-AlAych/IDOProject.git
+
+   2) Set up the Backend:
+
+      2.1) Navigate to the backendForIDO directory using the command: cd backendForIDO
+
+      2.2) Install the required dependencies using the command: dotnet restore
+
+      2.3) Set up the database: Open the appsettings.json file and update the connection string with your SQL Server details.(you will find the IDO dtabase 
+           backup file in the project folder
+           
+      2.4) Start the backend server using: dotnet run
+
+    3) Set up the Frontend: 
+   
+       3.1) Open another terminal or command prompt. Navigate to the IDO directory: cd IDO
+
+       3.2) Install the required dependencies: npm install
+
+       3.3) Start the frontend development server: ng serve
+
+       3.4) Access the IDO Application: Open a web browser. Go to http://localhost:4200 to access the IDO application.
+
+    Note that you can run both the backend and front end applications using one command:
+    1) Enter to the frontend IDO directory: cd IDO
+  
+    2) Run the following command: "npm run start"
+
+
+      
+
